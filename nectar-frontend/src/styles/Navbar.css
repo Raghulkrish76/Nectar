@@ -1,0 +1,166 @@
+/* ── Google Fonts ── */
+/* Loads two fonts: Cinzel (for headings/brand) and Lora (for links/text) */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500&display=swap");
+
+
+/* ─────────────────────────────────────────────
+   NAVBAR (the full top bar)
+───────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  /* lay children side by side */
+  align-items: center;
+  /* center them vertically */
+  justify-content: space-between;
+  /* push logo left, menu right */
+  padding: 0 2.5rem;
+  /* left/right breathing room */
+  height: 68px;
+  background-color: #1a3a2a;
+  /* dark green */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  /* subtle drop shadow */
+  position: sticky;
+  /* stays at top while scrolling */
+  top: 0;
+  z-index: 100;
+  /* sits above other content */
+}
+
+
+/* ─────────────────────────────────────────────
+   BRAND (logo icon + site name)
+───────────────────────────────────────────── */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* space between icon and name */
+  text-decoration: none;
+  /* remove underline from the link */
+}
+
+/* The small icon/emoji next to the brand name */
+.navbar__logo {
+  font-size: 1.4rem;
+  color: #c9a84c;
+  /* gold */
+}
+
+/* The "Nectar" text */
+.navbar__name {
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f5f0e8;
+  /* warm white */
+  letter-spacing: 0.08em;
+}
+
+
+/* ─────────────────────────────────────────────
+   MENU (links + action buttons together)
+───────────────────────────────────────────── */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  /* space between links group and buttons group */
+}
+
+
+/* ─────────────────────────────────────────────
+   NAV LINKS (Home, Shop, etc.)
+───────────────────────────────────────────── */
+.navbar__links {
+  list-style: none;
+  /* remove bullet points */
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each individual link */
+.navbar__link {
+  font-family: "Lora", serif;
+  font-size: 0.95rem;
+  color: #d4e8d4;
+  /* light green */
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  position: relative;
+  /* needed so the underline can be positioned */
+  padding-bottom: 2px;
+  transition: color 0.2s;
+  /* smooth color change on hover */
+}
+
+/* The animated underline (hidden by default, width = 0) */
+.navbar__link::after {
+  content: "";
+  /* required for pseudo-elements */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  /* starts invisible */
+  height: 1.5px;
+  background-color: #c9a84c;
+  /* gold underline */
+  transition: width 0.25s ease;
+  /* grows on hover */
+}
+
+/* On hover: change text color and grow the underline */
+.navbar__link:hover {
+  color: #f5f0e8;
+}
+
+.navbar__link:hover::after {
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────────────
+   ACTION AREA (greeting + buttons)
+───────────────────────────────────────────── */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+
+
+/* ─────────────────────────────────────────────
+   BUTTONS — shared base style
+───────────────────────────────────────────── */
+.navbar__btn {
+  font-family: "Cinzel", serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  padding: 0.45rem 1.1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+
+/* LOGOUT — outlined red/pink */
+.navbar__btn--logout {
+  background: transparent;
+  color: #e8a0a0;
+  border: 1.5px solid #e8a0a0;
+  font-size: 0.8rem;
+}
+
+.navbar__btn--logout:hover {
+  background: rgba(232, 160, 160, 0.1);
+  transform: translateY(35px);
+}
