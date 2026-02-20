@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User,Plant,HealthBenefit
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     admin_token = serializers.CharField(write_only=True, required=False)
@@ -32,3 +33,11 @@ class HealthBenefitSerializer(serializers.ModelSerializer):
     class Meta:
         model = HealthBenefit
         fields = '__all__'
+
+class NectarTokenSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['role'] = user.role
+        token['username'] = user.username
+        return token     

@@ -1,12 +1,12 @@
 import "../styles/Navbar.css";
-
+import useAuth from "../hooks/useAuth";
 export function Navbar() {
   // Handle logout: clear everything in localStorage, then reload
   function handleLogout() {
     localStorage.clear();
     window.location.href = "/";
   }
-
+  const {isAdmin} = useAuth()
   return (
     <nav className="navbar">
       {/* ── Brand ── */}
@@ -21,6 +21,11 @@ export function Navbar() {
           <li><a href="/" className="navbar__link">Home</a></li>
           <li><a href="/plants" className="navbar__link">Plants</a></li>
           <li><a href="/about" className="navbar__link">About</a></li>
+          {isAdmin && (
+                    <li>
+                        <button>Admin</button>
+                    </li>
+                )}
         </ul>
 
         <div className="navbar__actions">
@@ -31,6 +36,7 @@ export function Navbar() {
           >
             Logout
           </button>
+
         </div>
       </div>
     </nav>
