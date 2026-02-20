@@ -3,7 +3,7 @@ from rest_framework import generics
 from .serializers import UserSerializer,PlantSerializer,HealthBenefitSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from .models import User,Plant,HealthBenefit
-
+from rest_framework.generics import RetrieveAPIView
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -19,7 +19,7 @@ class HealthBenefitView(generics.ListAPIView):
     serializer_class = HealthBenefitSerializer
     permission_classes = [IsAuthenticated]
 
-class PlantDetailView(RetrieveAPIview):
+class PlantDetailView(RetrieveAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [IsAuthenticated]

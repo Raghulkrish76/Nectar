@@ -5,6 +5,7 @@ import { Register } from "./pages/Register"
 import { Login } from "./pages/Login"
 import { ProtectedRoute } from "./components/ProtectedRoute"
 import {HomePage} from  "./pages/HomePage"
+import { PlantDetailPage } from "./pages/PlantDetailPage"
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
     <Route path = "/" element = {
       <ProtectedRoute>
         <HomePage/>
+      </ProtectedRoute> }/>
+    <Route path = "/plants/:id" element = {
+      <ProtectedRoute>
+        <PlantDetailPage/>
       </ProtectedRoute> }/>
     <Route  path = "/login/" element = {<Login/>}/>
     <Route  path = "/register/" element = {<Register/>}/>

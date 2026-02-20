@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import api from "../api"
 import { Navbar } from "../components/Navbar"
 import "../styles/HomePage.css"
-
+import { Link } from "react-router-dom"
 export function HomePage() {
     const [plants, setPlants] = useState([])
-    const [benefits,setBenefits] = useState([])
+    const [benefits,setBenifits] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -20,7 +20,7 @@ export function HomePage() {
         ])
             .then(([plantres,benefitsres])=>{
                 const benifits = benefitsres.data
-                setBenefits(benifits)
+                setBenifits(benifits)
 
                 const mappedplants = plantres.data.map((plant)=>({
                     ...plant,
@@ -31,7 +31,7 @@ export function HomePage() {
                 setLoading(false)
 
             })
-            .catch((err)=>{
+            .catch((error)=>{
                 setError("Failed to load plants")
                 setLoading(false)
             })
@@ -42,7 +42,7 @@ export function HomePage() {
 
             <div className="home-layout">
 
-                {/* ── LEFT: Filters (hardcoded UI only) ─────────── */}
+
                 <aside className="panel filters-panel">
                     <h2 className="panel__title">Filters</h2>
 
@@ -74,7 +74,9 @@ export function HomePage() {
                     </button>
                 </aside>
 
-                {/* ── CENTER: Plant Cards ────────────────────────── */}
+
+
+
                 <main className="plants-panel">
                     <h2 className="panel__title">Medicinal Plants</h2>
 
@@ -91,10 +93,8 @@ export function HomePage() {
                             </p>
                             <div className="plants-grid">
                                 {plants.map((plant) => {
-                                    const benefits = Array.isArray(plant.health_benifits)
-                                        ? plant.health_benifits
-                                        : []
                                     return (
+                                        <Link to={`/plants/${plant.id}`}>
                                         <div className="plant-card" key={plant.id} >
                                             <div className="plant-card__img-wrap">
                                                 <img src={plant.image} alt={plant.name} />
@@ -110,6 +110,7 @@ export function HomePage() {
                                                 </div>
                                             </div>
                                         </div>
+                                        </Link>
                                     )
                                 })}
                             </div>
@@ -117,7 +118,11 @@ export function HomePage() {
                     )}
                 </main>
 
-                {/* ── RIGHT: Plant of the Day ────────────────────── */}
+
+
+
+
+
                 <aside className="panel potd-panel">
                     <h2 className="panel__title">Plant of the Day</h2>
 
