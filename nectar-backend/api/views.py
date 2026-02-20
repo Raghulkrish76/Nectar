@@ -18,3 +18,8 @@ class HealthBenefitView(generics.ListAPIView):
     queryset = HealthBenefit.objects.all()
     serializer_class = HealthBenefitSerializer
     permission_classes = [IsAuthenticated]
+
+class PlantDetailView(RetrieveAPIview):
+    queryset = Plant.objects.all()
+    serializer_class = PlantSerializer
+    permission_classes = [IsAuthenticated]
