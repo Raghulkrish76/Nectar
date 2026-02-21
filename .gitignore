@@ -12,3 +12,4 @@ nectar-frontend/src/pages/sample.jsx
 .env
 __pycache__
 *.pyc
+run.bat

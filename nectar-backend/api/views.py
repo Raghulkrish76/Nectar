@@ -7,6 +7,9 @@ from .permissions import IsAdmin
 from rest_framework.generics import CreateAPIView,UpdateAPIView,DestroyAPIView
 from .serializers import NectarTokenSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

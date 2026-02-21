@@ -8,7 +8,5 @@ urlpatterns = [
     path('plants/create/',PlantCreateView.as_view(),name = "Plant-create"),
     path('plants/<int:pk>/',PlantDetailView.as_view(),name = "Plant-detail"),
     path('plants/<int:pk>/update/',PlantUpdateView.as_view(),name = "Plant-update"),
-    path('plants/<int:pk>/delete/',PlantDeleteView.as_view(),name = "plant-delete")
-    
-
+    path('plants/<int:pk>/delete/',PlantDeleteView.as_view(),name = "plant-delete"),  
 ]

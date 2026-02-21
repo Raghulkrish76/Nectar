@@ -2,44 +2,48 @@ import { useState, useEffect } from "react"
 import api from "../api"
 import { Navbar } from "../components/Navbar"
 import "../styles/HomePage.css"
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import useAuth from "../hooks/useAuth"
+
 export function HomePage() {
     const [plants, setPlants] = useState([])
-    const [benefits,setBenifits] = useState([])
+    const [benefits, setBenifits] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const { isAdmin } = useAuth()
+    const navigate = useNavigate()
 
     const plantOfTheDay = plants.find(
         (p) => p.name.toLowerCase() === "tulsi"
     ) || null
 
-   useEffect(()=>{
+    useEffect(() => {
         Promise.all([
             api.get("/api/plants/"),
             api.get("/api/healthbenefits/")
         ])
-            .then(([plantres,benefitsres])=>{
+            .then(([plantres, benefitsres]) => {
                 const benifits = benefitsres.data
                 setBenifits(benifits)
 
-                const mappedplants = plantres.data.map((plant)=>({
+                const mappedplants = plantres.data.map((plant) => ({
                     ...plant,
                     health_benifits: plant.health_benifits
-                    .map((id)=> benifits.find((b)=>b.id === id)?.name).filter(Boolean)
+                        .map((id) => benifits.find((b) => b.id === id)?.name).filter(Boolean)
                 }))
                 setPlants(mappedplants)
                 setLoading(false)
 
             })
-            .catch((error)=>{
+            .catch((error) => {
                 setError("Failed to load plants")
                 setLoading(false)
             })
-   },[])
+    }, [])
     return (
         <div className="home-page">
             <Navbar />
-                
+
             <div className="home-layout">
 
 
@@ -86,6 +90,11 @@ export function HomePage() {
                         <p className="result-count" style={{ color: "#e8a0a0" }}>{error}</p>
                     )}
 
+                    {isAdmin && (
+                        <button onClick={() => navigate("/plants/create/")}>
+                            Create Plant
+                        </button>
+                    )}
                     {!loading && !error && (
                         <>
                             <p className="result-count">
@@ -95,21 +104,21 @@ export function HomePage() {
                                 {plants.map((plant) => {
                                     return (
                                         <Link to={`/plants/${plant.id}`}>
-                                        <div className="plant-card" key={plant.id} >
-                                            <div className="plant-card__img-wrap">
-                                                <img src={plant.image} alt={plant.name} />
-                                            </div>
-                                            <div className="plant-card__body">
-                                                <h3 className="plant-card__name">{plant.name}</h3>
-                                                <p className="plant-card__region">{plant.region}</p>
-                                                <p className="plant-card__desc">{plant.description}</p>
-                                                <div className="plant-card__tags">
-                                                    {plant.health_benifits.map((b) => (
-                                                        <span className="plant-card__tag" key={b}>{b}</span>
-                                                    ))}
+                                            <div className="plant-card" key={plant.id} >
+                                                <div className="plant-card__img-wrap">
+                                                    <img src={plant.image} alt={plant.name} />
+                                                </div>
+                                                <div className="plant-card__body">
+                                                    <h3 className="plant-card__name">{plant.name}</h3>
+                                                    <p className="plant-card__region">{plant.region}</p>
+                                                    <p className="plant-card__desc">{plant.description}</p>
+                                                    <div className="plant-card__tags">
+                                                        {plant.health_benifits.map((b) => (
+                                                            <span className="plant-card__tag" key={b}>{b}</span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         </Link>
                                     )
                                 })}
@@ -158,6 +167,6 @@ export function HomePage() {
                 </aside>
 
             </div>
-        </div>
+        </div >
     )
 }

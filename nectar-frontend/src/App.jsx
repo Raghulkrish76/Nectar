@@ -6,6 +6,7 @@ import { Login } from "./pages/Login"
 import { ProtectedRoute } from "./components/ProtectedRoute"
 import {HomePage} from  "./pages/HomePage"
 import { PlantDetailPage } from "./pages/PlantDetailPage"
+import { CreatePlant } from "./components/CreatePlantForm"
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
       </ProtectedRoute> }/>
     <Route  path = "/login/" element = {<Login/>}/>
     <Route  path = "/register/" element = {<Register/>}/>
+    <Route  path = "/plants/create/" element = {<CreatePlant/>}/>
+    
    </Routes>
    </BrowserRouter>
    

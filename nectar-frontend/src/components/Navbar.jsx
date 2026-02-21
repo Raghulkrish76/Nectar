@@ -1,7 +1,7 @@
 import "../styles/Navbar.css";
 import useAuth from "../hooks/useAuth";
 export function Navbar() {
-  // Handle logout: clear everything in localStorage, then reload
+
   function handleLogout() {
     localStorage.clear();
     window.location.href = "/";
@@ -9,13 +9,13 @@ export function Navbar() {
   const {isAdmin} = useAuth()
   return (
     <nav className="navbar">
-      {/* ── Brand ── */}
+   
       <a href="/" className="navbar__brand">
         <span className="navbar__logo">✦</span>
         <span className="navbar__name">Nectar</span>
       </a>
 
-      {/* ── Links + Logout ── */}
+    
       <div className="navbar__menu">
         <ul className="navbar__links">
           <li><a href="/" className="navbar__link">Home</a></li>
@@ -23,13 +23,13 @@ export function Navbar() {
           <li><a href="/about" className="navbar__link">About</a></li>
           {isAdmin && (
                     <li>
-                        <button>Admin</button>
+                        <a>Admin Account </a>
                     </li>
                 )}
         </ul>
 
         <div className="navbar__actions">
-          {/* Logout is always visible */}
+         
           <button
             className="navbar__btn navbar__btn--logout"
             onClick={handleLogout}
