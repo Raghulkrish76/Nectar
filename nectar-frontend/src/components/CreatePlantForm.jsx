@@ -36,7 +36,7 @@ export function CreatePlant() {
             formData.append("image", image)
         }
 
-        await api.post('api/plants/create',formData)
+        await api.post('api/plants/create/',formData)
         navigate("/")
        
 
