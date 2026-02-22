@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import api from '../api'
+import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 export function PlantDetailPage() {
@@ -10,6 +11,8 @@ export function PlantDetailPage() {
     const [plant, setPlant] = useState(null)
     const [loading, setLoading] = useState(true)
     const [editMode, setEditMode] = useState(false)
+    const navigate = useNavigate()
+    const [deleting,setDeleting] = useState(false)
     useEffect(() => {
         Promise.all([
             api.get(`/api/plants/${id}/`),
@@ -53,9 +56,24 @@ export function PlantDetailPage() {
         catch (error) {
             console.log(error.response.data)
         }
-
+        
 
     }
+    const handleDelete = async ()=>{
+               const confirmed = window.confirm("Are you sure you want to delete")
+               if(!confirmed){
+                return
+               }
+                setDeleting(true)
+               try{
+                    await api.delete(`/api/plants/${id}/delete/`);
+                    navigate("/")
+               }catch(error){
+                 console.log(error.response.data)
+                 alert("Falied to delete plant")
+                 setDeleting(false)
+               }
+        }
     return (
         <>
 
@@ -170,7 +188,9 @@ export function PlantDetailPage() {
                     ) : (
                         <>
                             <button onClick={() => setEditMode(true)}>Edit Plant </button>
-                            <button> Delete Plant </button>
+                            <button onClick = {handleDelete} disabled={deleting} > 
+                                {deleting?"Deleting..":"Delete Plant"}
+                            </button>
                         </>
                     )}
                 </div>
