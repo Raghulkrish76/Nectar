@@ -4,14 +4,20 @@ import { Navbar } from "../components/Navbar"
 import "../styles/HomePage.css"
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import { Bookmarks } from "./Bookmarks"
 
 export function HomePage() {
     const [plants, setPlants] = useState([])
     const [benefits, setBenifits] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const { isAdmin } = useAuth()
+    const { isAdmin, username } = useAuth()
     const navigate = useNavigate()
+    const [search, setSearch] = useState("")
+    const [region, setRegion] = useState("")
+    const [plantType, setPlantType] = useState("")
+    const [appliedFilters, setAppliedFilters] = useState({})
+    const [selectedBenefits, setSelectedBenefits] = useState([])
 
     const plantOfTheDay = plants.find(
         (p) => p.name.toLowerCase() === "tulsi"
@@ -19,7 +25,7 @@ export function HomePage() {
 
     useEffect(() => {
         Promise.all([
-            api.get("/api/plants/"),
+            api.get("/api/plants/", { params: appliedFilters }),
             api.get("/api/healthbenefits/")
         ])
             .then(([plantres, benefitsres]) => {
@@ -38,18 +44,23 @@ export function HomePage() {
             .catch((error) => {
                 setError("Failed to load plants")
                 setLoading(false)
+                console.log(error)
             })
-    }, [])
+    }, [appliedFilters])
     return (
         <div className="home-page">
             <Navbar />
+
 
             <div className="home-layout">
 
 
                 <aside className="panel filters-panel">
                     <h2 className="panel__title">Filters</h2>
-
+                    <h3>Hello {username} !</h3>
+                    <Link to="/bookmarks">
+                        <button>Bookmarks</button>
+                    </Link>
                     <div className="filter-group">
                         <span className="filter-group__label">Region</span>
                         <div className="region-chips">
@@ -64,15 +75,31 @@ export function HomePage() {
                     <div className="filter-group">
                         <span className="filter-group__label">Health Benefits</span>
                         <div className="benefit-list">
-                            {["Anti-inflammatory", "Digestive Health", "Immunity Boost", "Stress Relief", "Skin Care", "Antioxidant"].map((b) => (
-                                <label key={b} className="benefit-item">
-                                    <input type="checkbox" disabled />
-                                    {b}
+                            {benefits.map((b) => (
+                                <label key={b.id} className="benefit-item">
+                                    <input type="checkbox"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedBenefits([...selectedBenefits, b.name])
+                                            } else {
+                                                setSelectedBenefits(selectedBenefits.filter((n) => n !== b.name))
+                                            }
+                                        }}
+                                    />
+                                    {b.name}
                                 </label>
                             ))}
                         </div>
                     </div>
+                    <button onClick={() => {
+                        const params = {}
+                        if (selectedBenefits.length > 0) params.health_benifits = selectedBenefits.join(",")
+                    
+                        setAppliedFilters(params)
 
+                    }}>
+                        Apply  Health Benefits
+                    </button>
                     <button className="filter-clear-btn" disabled>
                         Clear All Filters
                     </button>
@@ -82,6 +109,49 @@ export function HomePage() {
 
 
                 <main className="plants-panel">
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Search Plants"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <select value={region} onChange={(e) => setRegion(e.target.value)}>
+                            <option value=""> All Region</option>
+                            <option value="tropical"> Tropical </option>
+                            <option value="subtropical">Sub-tropical</option>
+                            <option value="temperate"> Temperate </option>
+                            <option value="arid">Arid/Desert</option>
+                            <option value="alpine">Alphine</option>
+
+
+                        </select>
+
+                        <select
+                            value={plantType}
+                            onChange={(e) => setPlantType(e.target.value)}
+                        >
+                            <option value="">All Types</option>
+                            <option value="herb">Herb</option>
+                            <option value="shrub">Shrub</option>
+                            <option value="tree">Tree</option>
+                            <option value="climber">Climber</option>
+                            <option value="aquatic">Aquatic</option>
+                            <option value="succulent">Succulent</option>
+                        </select>
+                        <button onClick={() => {
+                            const params = {}
+                            if (search) params.search = search
+                            if (region) params.region = region
+                            if (plantType) params.plant_type = plantType
+                            setAppliedFilters(params)
+
+                        }}>
+                            Apply  Filters
+                        </button>
+
+                    </div>
+                    <br />
                     <h2 className="panel__title">Medicinal Plants</h2>
 
                     {loading && <p className="result-count">Loading plants…</p>}
@@ -126,12 +196,6 @@ export function HomePage() {
                         </>
                     )}
                 </main>
-
-
-
-
-
-
                 <aside className="panel potd-panel">
                     <h2 className="panel__title">Plant of the Day</h2>
 
@@ -143,7 +207,7 @@ export function HomePage() {
 
                     {!loading && plantOfTheDay && (
                         <>
-                            <div className="potd-badge">⭐ Featured</div>
+                            <div className="potd-badge"> ⭐ Featured</div>
                             <div className="potd-img-wrap">
                                 <img src={plantOfTheDay.image} alt={plantOfTheDay.name} />
                             </div>

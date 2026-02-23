@@ -10,7 +10,9 @@ from rest_framework.generics import RetrieveAPIView
 from .permissions import IsAdmin
 from rest_framework.generics import CreateAPIView,UpdateAPIView,DestroyAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from rest_framework import viewsets,filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import PlantFilter
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -22,6 +24,9 @@ class PlantListView(generics.ListAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = PlantFilter
+    search_fields = ['name', 'health_benifits__name']
 
 class HealthBenefitView(generics.ListAPIView):
     queryset = HealthBenefit.objects.all()
@@ -32,6 +37,7 @@ class PlantDetailView(RetrieveAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [IsAuthenticated]
+
 
 class PlantCreateView(CreateAPIView):
     queryset = Plant.objects.all()

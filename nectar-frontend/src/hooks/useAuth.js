@@ -11,7 +11,6 @@ const useAuth = ()=>{
         };
     }
         const decodedToken = jwtDecode(token)
-        console.log(decodedToken)
         return{
             isAuthenticated: true,
             isAdmin: decodedToken.role === 'admin',
