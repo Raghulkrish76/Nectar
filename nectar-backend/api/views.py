@@ -1,11 +1,14 @@
 from rest_framework import generics
-from .serializers import UserSerializer,PlantSerializer,HealthBenefitSerializer
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from .serializers import UserSerializer,PlantSerializer,HealthBenefitSerializer,BookmarkSerializer,NectarTokenSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
-from .models import User,Plant,HealthBenefit
+from .models import User,Plant,HealthBenefit,Bookmark
 from rest_framework.generics import RetrieveAPIView
 from .permissions import IsAdmin
 from rest_framework.generics import CreateAPIView,UpdateAPIView,DestroyAPIView
-from .serializers import NectarTokenSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -47,3 +50,27 @@ class PlantDeleteView(DestroyAPIView):
 
 class NectarTokenView(TokenObtainPairView):
     serializer_class = NectarTokenSerializer
+
+
+class BookmarkView(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        bookmarks = Bookmark.objects.filter(user=request.user)
+        serializer = BookmarkSerializer(bookmarks,many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        plant_id = request.data.get('plant_id')
+        plant = get_object_or_404(Plant,id=plant_id)
+        
+        bookmark,created = Bookmark.objects.get_or_create(
+            user=request.user,
+            plant=plant
+        )
+        if not created:
+            return Response({'message': 'Already bookmarked'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': 'Bookmarked successfully'}, status=status.HTTP_201_CREATED)
+

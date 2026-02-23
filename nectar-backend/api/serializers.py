@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,Plant,HealthBenefit
+from .models import User,Plant,HealthBenefit,Bookmark
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,6 +25,13 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     
 class PlantSerializer(serializers.ModelSerializer):
+    is_bookmarked = serializers.SerializerMethodField()
+
+    def get_is_bookmarked(self,obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.bookmarks.filter(user=request.user).exists()
+        return False
     class Meta:
         model = Plant
         fields = '__all__'
@@ -41,3 +48,10 @@ class NectarTokenSerializer(TokenObtainPairSerializer):
         token['role'] = user.role
         token['username'] = user.username
         return token     
+    
+class BookmarkSerializer(serializers.ModelSerializer):
+    plant = PlantSerializer(read_only = True)
+
+    class Meta:
+        model = Bookmark
+        fields = ['id','plant','created_at']

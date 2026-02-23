@@ -74,6 +74,13 @@ export function PlantDetailPage() {
                  setDeleting(false)
                }
         }
+    const handleBookmark = async ()=>{
+        try{
+            await api.post('/api/bookmarks/',{plant_id:plant.id})
+        }catch(error){
+            console.log(error.response.data)
+        }
+    }
     return (
         <>
 
@@ -195,6 +202,7 @@ export function PlantDetailPage() {
                     )}
                 </div>
             )}
+            <button onClick={handleBookmark}>{plant.is_bookmarked?"Plant Bookmarked":"Set Plant as Bookmark"} </button>
 
 
         </>
