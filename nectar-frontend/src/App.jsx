@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute"
 import {HomePage} from  "./pages/HomePage"
 import { PlantDetailPage } from "./pages/PlantDetailPage"
 import { CreatePlant } from "./components/CreatePlantForm"
+import { Bookmarks } from "./pages/Bookmarks"
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
     <Route  path = "/login/" element = {<Login/>}/>
     <Route  path = "/register/" element = {<Register/>}/>
     <Route  path = "/plants/create/" element = {<CreatePlant/>}/>
-    
+    <Route  path = "/bookmarks/" element = {<Bookmarks/>}/>
    </Routes>
    </BrowserRouter>
    
