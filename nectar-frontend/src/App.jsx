@@ -8,6 +8,7 @@ import {HomePage} from  "./pages/HomePage"
 import { PlantDetailPage } from "./pages/PlantDetailPage"
 import { CreatePlant } from "./components/CreatePlantForm"
 import { Bookmarks } from "./pages/Bookmarks"
+import { AboutPage } from "./pages/AboutPage"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
     <Route  path = "/register/" element = {<Register/>}/>
     <Route  path = "/plants/create/" element = {<CreatePlant/>}/>
     <Route  path = "/bookmarks/" element = {<Bookmarks/>}/>
+    <Route path = "/aboutus/" element = {<AboutPage/>}/>
    </Routes>
    </BrowserRouter>
    
