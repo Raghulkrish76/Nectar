@@ -1,6 +1,5 @@
 import { BrowserRouter,Route,Routes } from "react-router"
 import { Userpage} from "./pages/UserPage"
-import { AdminPage } from "./pages/AdminPage"
 import { Register } from "./pages/Register"
 import { Login } from "./pages/Login"
 import { ProtectedRoute } from "./components/ProtectedRoute"
@@ -9,6 +8,7 @@ import { PlantDetailPage } from "./pages/PlantDetailPage"
 import { CreatePlant } from "./components/CreatePlantForm"
 import { Bookmarks } from "./pages/Bookmarks"
 import { AboutPage } from "./pages/AboutPage"
+import { AdminDashboard } from "./pages/AdminDashboard"
 
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
     <Route  path = "/plants/create/" element = {<CreatePlant/>}/>
     <Route  path = "/bookmarks/" element = {<Bookmarks/>}/>
     <Route path = "/aboutus/" element = {<AboutPage/>}/>
+    <Route path = "/admindashboard/" element = {<AdminDashboard/>}/>
    </Routes>
    </BrowserRouter>
    

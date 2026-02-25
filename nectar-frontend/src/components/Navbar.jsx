@@ -1,5 +1,6 @@
 import "../styles/Navbar.css";
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 export function Navbar() {
 
   function handleLogout() {
@@ -20,7 +21,7 @@ export function Navbar() {
         <ul className="navbar__links">
           <li><a href="/" className="navbar__link">Home</a></li>
           <li><a href="/plants" className="navbar__link">Plants</a></li>
-          <li><a href="/about" className="navbar__link">About</a></li>
+          <li><a href="/aboutus" className="navbar__link" ><Link to = "/aboutus/"> About </Link> </a></li>
           {isAdmin && (
                     <li>
                         <a>Admin Account </a>

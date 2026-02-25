@@ -54,6 +54,24 @@ class PlantDeleteView(DestroyAPIView):
     serializer_class = PlantSerializer
     permission_classes = [IsAdmin]
 
+class AdminStatsView(APIView):
+    permission_classes = [IsAuthenticated,IsAdmin]
+
+    def get(self,request):
+        return Response({
+            'total_plants': Plant.objects.count(),
+            'total_users': User.objects.count()
+        })
+
+class AdminUserListView(APIView):
+    Permission_classes = [IsAuthenticated,IsAdmin]
+
+    def get(self,request):
+        users = User.objects.all()
+        serializer = UserSerializer(users,many = True)
+        return Response(serializer.data)
+    
+
 class NectarTokenView(TokenObtainPairView):
     serializer_class = NectarTokenSerializer
 

@@ -1,25 +1,11 @@
-import '../styles/AboutPage.css'
 
 export function AboutPage() {
+
+    
+
+
     return (
         <>
-
-            
-
-         
-                <nav>
-                    <a href="#">Nectar</a>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Plants</a></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
-                    <div>
-                        <a href="#">Login</a>
-                        <a href="#">Register</a>
-                    </div>
-                </nav>
-
              
                 <section>
                     <div>
@@ -147,11 +133,7 @@ export function AboutPage() {
                         <a href="#">Register Free</a>
                     </div>
                 </section>
-
                 
-
-
-
                 <footer>
                     <p>Nectar</p>
                     <p>Digitally preserving India's herbal heritage. Built with care.</p>
