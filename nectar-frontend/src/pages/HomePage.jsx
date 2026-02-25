@@ -18,20 +18,17 @@ export function HomePage() {
     const [plantType, setPlantType] = useState("")
     const [appliedFilters, setAppliedFilters] = useState({})
     const [selectedBenefits, setSelectedBenefits] = useState([])
-
-    const plantOfTheDay = plants.find(
-        (p) => p.name.toLowerCase() === "tulsi"
-    ) || null
-
+    const [plantofTheDay,setPlantofTheDay] = useState([])
     useEffect(() => {
         Promise.all([
             api.get("/api/plants/", { params: appliedFilters }),
-            api.get("/api/healthbenefits/")
+            api.get("/api/healthbenefits/"),
+            api.get("/api/plantoftheday")
         ])
-            .then(([plantres, benefitsres]) => {
+            .then(([plantres, benefitsres,plantofthedayRes]) => {
                 const benifits = benefitsres.data
                 setBenifits(benifits)
-
+                setPlantofTheDay(plantofthedayRes.data)
                 const mappedplants = plantres.data.map((plant) => ({
                     ...plant,
                     health_benifits: plant.health_benifits
@@ -201,31 +198,22 @@ export function HomePage() {
 
                     {loading && <p className="result-count">Loading…</p>}
 
-                    {!loading && !plantOfTheDay && (
+                    {!loading && !plantofTheDay && (
                         <p className="result-count">Plant not found in database.</p>
                     )}
 
-                    {!loading && plantOfTheDay && (
+                    {!loading && plantofTheDay && (
                         <>
                             <div className="potd-badge"> ⭐ Featured</div>
                             <div className="potd-img-wrap">
-                                <img src={plantOfTheDay.image} alt={plantOfTheDay.name} />
+                                <img src={plantofTheDay.image} alt={plantofTheDay.name} />
                             </div>
-                            <h3 className="potd-name">{plantOfTheDay.name}</h3>
-                            <p className="potd-region">{plantOfTheDay.region}</p>
-                            <p className="potd-desc">{plantOfTheDay.description}</p>
-                            <div className="potd-benefits">
-                                <p className="potd-benefits__title">Key Benefits</p>
-                                <ul className="potd-benefits__list">
-                                    {(Array.isArray(plantOfTheDay.health_benifits)
-                                        ? plantOfTheDay.health_benifits
-                                        : []
-                                    ).map((b) => (
-                                        <li key={b}>{b}</li>
-                                    ))}
-                                </ul>
+                            <h3 className="potd-name">{plantofTheDay.name}</h3>
+                            <p className="potd-region">{plantofTheDay.region}</p>
+                            <p className="potd-desc">{plantofTheDay.description}</p>
+                            <div className="potd-benefits">      
                             </div>
-                            <button className="potd-btn">View Full Profile →</button>
+                            <button className="potd-btn"> <Link to = {`/plants/${plantofTheDay.id}`} > View Full Profile →</Link></button>
                         </>
                     )}
                 </aside>

@@ -3,6 +3,8 @@ from .views import PlantListView,HealthBenefitView,PlantDetailView
 from .views import PlantCreateView,PlantUpdateView,PlantDeleteView
 from .views import BookmarkView
 from .views import AdminStatsView,AdminUserListView
+from .views import PlantofTheDay
+
 
 urlpatterns = [
     path('plants/',PlantListView.as_view(),name = 'plant-list'),
@@ -14,5 +16,7 @@ urlpatterns = [
 
     path('bookmarks/',BookmarkView.as_view(),name = "bookmark"),
     path('adminstats/',AdminStatsView.as_view(),name = "admin-stats"),
-    path('adminusers/',AdminUserListView.as_view(),name = "admin-users")
+    path('adminusers/',AdminUserListView.as_view(),name = "admin-users"),
+    path('plantoftheday/',PlantofTheDay.as_view(),name = "plant-of-the-day")
+    
 ]

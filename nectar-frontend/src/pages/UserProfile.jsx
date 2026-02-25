@@ -5,6 +5,7 @@ import api from "../api"
 export function UserProfile(){
     const {username, role} = useAuth()
     const [bookmarks, setBookmarks] = useState([])
+    const token = localStorage.getItem("access")
 
     useEffect(()=>{
         const getBookmarks = async()=>{
@@ -12,7 +13,7 @@ export function UserProfile(){
                 const response = await api.get("/api/bookmarks/")
                 setBookmarks(response.data)
             }catch(error){
-                console.error(error.response.data)
+                console.error(error.response?.data || error.message)
             }
         }
         getBookmarks()
@@ -30,6 +31,7 @@ export function UserProfile(){
 
                 </div>
             ))}
+            <p>{token}</p>
         </>
     )
 }

@@ -1,3 +1,4 @@
+from datetime import date
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
@@ -73,6 +74,18 @@ class AdminUserListView(APIView):
 
 class NectarTokenView(TokenObtainPairView):
     serializer_class = NectarTokenSerializer
+
+class PlantofTheDay(APIView):
+    def get(self,request):
+        plants = Plant.objects.all()
+        if not plants.exists():
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        index = date.today().toordinal() % plants.count()
+        plant = plants[index]
+        
+        serializer = PlantSerializer(plant,context={'request':request})
+        return Response(serializer.data)
 
 
 class BookmarkView(APIView):
