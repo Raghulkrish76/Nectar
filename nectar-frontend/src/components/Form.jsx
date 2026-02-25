@@ -20,6 +20,7 @@ export function Form({route,method}){
                 payload.admin_token = adminToken
             }
             const res = await api.post(route,payload)
+            console.log(res.data)
             if(method==='login'){
                 localStorage.setItem(ACCESS_TOKEN,res.data.access)
                 localStorage.setItem(REFRESH_TOKEN,res.data.refresh)

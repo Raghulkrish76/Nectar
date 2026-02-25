@@ -15,6 +15,7 @@ const useAuth = ()=>{
             isAuthenticated: true,
             isAdmin: decodedToken.role === 'admin',
             username : decodedToken.username,
+            role : decodedToken.role
         }
     }
 
