@@ -54,7 +54,10 @@ export function HomePage() {
 
                 <aside className="panel filters-panel">
                     <h2 className="panel__title">Filters</h2>
-                    <h3>Hello {username} !</h3>
+                    <h3><Link to = "/user-profile/">
+                       Hello {username} !
+                     </Link>
+                    </h3>
                     <Link to="/bookmarks">
                         <button>Bookmarks</button>
                     </Link>
@@ -170,8 +173,8 @@ export function HomePage() {
                             <div className="plants-grid">
                                 {plants.map((plant) => {
                                     return (
-                                        <Link to={`/plants/${plant.id}`}>
-                                            <div className="plant-card" key={plant.id} >
+                                         <Link to={`/plants/${plant.id}`} key={plant.id}>
+                                            <div className="plant-card"  >
                                                 <div className="plant-card__img-wrap">
                                                     <img src={plant.image} alt={plant.name} />
                                                 </div>

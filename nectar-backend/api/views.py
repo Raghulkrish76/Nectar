@@ -54,6 +54,15 @@ class PlantDeleteView(DestroyAPIView):
     serializer_class = PlantSerializer
     permission_classes = [IsAdmin]
 
+class LandingPageview(generics.ListAPIView):
+    queryset = Plant.objects.all()
+    serializer_class = PlantSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Plant.objects.all()[:5]
+    
+
 class AdminStatsView(APIView):
     permission_classes = [IsAuthenticated,IsAdmin]
 

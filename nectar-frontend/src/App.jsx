@@ -9,6 +9,7 @@ import { Bookmarks } from "./pages/Bookmarks"
 import { AboutPage } from "./pages/AboutPage"
 import { AdminDashboard } from "./pages/AdminDashboard"
 import { UserProfile } from "./pages/UserProfile"
+import { LandingPage } from "./pages/LandingPage"
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <UserProfile />
           </ProtectedRoute>}
         />
+      <Route path = "/landing-page/" element = {<LandingPage/>}/>
       </Routes>
     </BrowserRouter>
   )
