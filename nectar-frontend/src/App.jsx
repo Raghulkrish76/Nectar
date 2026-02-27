@@ -10,6 +10,7 @@ import { AboutPage } from "./pages/AboutPage"
 import { AdminDashboard } from "./pages/AdminDashboard"
 import { UserProfile } from "./pages/UserProfile"
 import { LandingPage } from "./pages/LandingPage"
+import { PlantOfTheDay } from "./pages/PlantOfTheDay"
 
 function App() {
   return (

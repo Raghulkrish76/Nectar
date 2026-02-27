@@ -5,6 +5,7 @@ import "../styles/HomePage.css"
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { Bookmarks } from "./Bookmarks"
+import { PlantOfTheDay } from "./PlantOfTheDay"
 
 export function HomePage() {
     const [plants, setPlants] = useState([])
@@ -197,28 +198,7 @@ export function HomePage() {
                     )}
                 </main>
                 <aside className="panel potd-panel">
-                    <h2 className="panel__title">Plant of the Day</h2>
-
-                    {loading && <p className="result-count">Loading…</p>}
-
-                    {!loading && !plantofTheDay && (
-                        <p className="result-count">Plant not found in database.</p>
-                    )}
-
-                    {!loading && plantofTheDay && (
-                        <>
-                            <div className="potd-badge"> ⭐ Featured</div>
-                            <div className="potd-img-wrap">
-                                <img src={plantofTheDay.image} alt={plantofTheDay.name} />
-                            </div>
-                            <h3 className="potd-name">{plantofTheDay.name}</h3>
-                            <p className="potd-region">{plantofTheDay.region}</p>
-                            <p className="potd-desc">{plantofTheDay.description}</p>
-                            <div className="potd-benefits">      
-                            </div>
-                            <button className="potd-btn"> <Link to = {`/plants/${plantofTheDay.id}`} > View Full Profile →</Link></button>
-                        </>
-                    )}
+                    <PlantOfTheDay/>
                 </aside>
 
             </div>
