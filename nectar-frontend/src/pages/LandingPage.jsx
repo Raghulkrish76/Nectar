@@ -1,5 +1,6 @@
 import { useEffect,useState } from "react"
 import api from "../api"
+import { Link } from "react-router-dom"
 
 export function LandingPage(){
     const [plants,setPlants] = useState([])
@@ -21,10 +22,12 @@ export function LandingPage(){
             
             <div key = {index}>
                 <p> {plant.name}</p>
-                <p>{plant.description}</p>
-
+                <p>{plant.description}</p> 
             </div>
         ))}
+         <h3> <Link  to = "/login/">Login</Link> </h3>
+         <h3> <Link  to = "/register/">Explore Now </Link> </h3>
+         <h3> <Link  to = "/register/">Register </Link> </h3>
         </>
     )
 }
