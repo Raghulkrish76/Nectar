@@ -6,6 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { Bookmarks } from "./Bookmarks"
 import { PlantOfTheDay } from "./PlantOfTheDay"
+import { PlantCard } from "./PlantCard"
 
 export function HomePage() {
     const [plants, setPlants] = useState([])
@@ -101,7 +102,7 @@ export function HomePage() {
                     }}>
                         Apply  Health Benefits
                     </button>
-                    <button className="filter-clear-btn" disabled>
+                    <button className="filter-clear-btn" disabled >
                         Clear All Filters
                     </button>
                 </aside>
@@ -171,29 +172,8 @@ export function HomePage() {
                             <p className="result-count">
                                 Showing {plants.length} plants
                             </p>
-                            <div className="plants-grid">
-                                {plants.map((plant) => {
-                                    return (
-                                         <Link to={`/plants/${plant.id}`} key={plant.id}>
-                                            <div className="plant-card"  >
-                                                <div className="plant-card__img-wrap">
-                                                    <img src={plant.image} alt={plant.name} />
-                                                </div>
-                                                <div className="plant-card__body">
-                                                    <h3 className="plant-card__name">{plant.name}</h3>
-                                                    <p className="plant-card__region">{plant.region}</p>
-                                                    <p className="plant-card__desc">{plant.description}</p>
-                                                    <div className="plant-card__tags">
-                                                        {plant.health_benifits.map((b) => (
-                                                            <span className="plant-card__tag" key={b}>{b}</span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    )
-                                })}
-                            </div>
+                            <PlantCard plants = {plants}/>
+                            
                         </>
                     )}
                 </main>
