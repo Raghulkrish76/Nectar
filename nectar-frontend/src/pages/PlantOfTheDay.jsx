@@ -21,8 +21,7 @@ export function PlantOfTheDay(){
             fetchData() 
     },[])
     return(
-        <>
-            
+        <>      
             <h2 className="panel__title">Plant of the Day</h2>
 
                     {loading && <p className="result-count">Loading…</p>}

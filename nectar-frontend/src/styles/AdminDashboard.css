@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
+
+:root {
+    --green-dark: #2d5a3d;
+    --green-mid: #3d7a52;
+    --green-light: #e8f2eb;
+    --green-pale: #f2f8f4;
+    --gold: #b8943f;
+    --gold-hover: #9e7d32;
+    --text-dark: #1e3328;
+    --text-body: #3a4a3e;
+    --text-muted: #6b7c70;
+    --white: #ffffff;
+    --shadow-soft: 0 4px 20px rgba(45, 90, 61, 0.10);
+    --shadow-card: 0 6px 28px rgba(45, 90, 61, 0.13);
+    --radius-card: 16px;
+    --radius-btn: 8px;
+}
+
+/* ===========================
+   PAGE
+=========================== */
+.admin-page {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f2f8f4 0%, #e8f2eb 60%, #ddeee3 100%);
+    font-family: "Lora", serif;
+    color: var(--text-body);
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+.admin-header {
+    margin-bottom: 2.5rem;
+}
+
+.admin-header__eyebrow {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+}
+
+.admin-header__title {
+    font-family: "Cinzel", serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin: 0 0 0.5rem 0;
+}
+
+.admin-header__divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+}
+
+/* ===========================
+   STATS CARDS
+=========================== */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 1.8rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+}
+
+.stat-card__label {
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.stat-card__value {
+    font-family: "Cinzel", serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    line-height: 1;
+}
+
+.stat-card__value span {
+    color: var(--gold);
+}
+
+/* ===========================
+   USERS SECTION
+=========================== */
+.admin-users {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+.admin-users__header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--green-light);
+}
+
+.admin-users__title {
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+}
+
+/* ===========================
+   USER ROW
+=========================== */
+.user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--green-light);
+    transition: background 0.18s;
+}
+
+.user-row:last-child {
+    border-bottom: none;
+}
+
+.user-row:hover {
+    background: var(--green-pale);
+}
+
+.user-row__name {
+    font-family: "Lora", serif;
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    margin: 0;
+}
+
+.user-row__role {
+    font-family: "Cinzel", serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    margin: 0;
+}
+
+/* ===========================
+   STATUS / ERROR
+=========================== */
+.admin-error {
+    font-family: "Lora", serif;
+    font-size: 0.9rem;
+    color: #c0392b;
+    background: #fef0ee;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-btn);
+    margin-top: 1rem;
+}
+
+.admin-loading {
+    font-family: "Lora", serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .admin-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+}

@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
+
+:root {
+    --green-dark: #2d5a3d;
+    --green-mid: #3d7a52;
+    --green-light: #e8f2eb;
+    --green-pale: #f2f8f4;
+    --gold: #b8943f;
+    --gold-hover: #9e7d32;
+    --text-dark: #1e3328;
+    --text-body: #3a4a3e;
+    --text-muted: #6b7c70;
+    --white: #ffffff;
+    --shadow-soft: 0 4px 20px rgba(45, 90, 61, 0.10);
+    --shadow-card: 0 6px 28px rgba(45, 90, 61, 0.13);
+    --radius-card: 16px;
+    --radius-btn: 8px;
+}
+
+/* ===========================
+   PAGE
+=========================== */
+.landing-page {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f2f8f4 0%, #e8f2eb 60%, #ddeee3 100%);
+    font-family: "Lora", serif;
+    color: var(--text-body);
+}
+
+/* ===========================
+   HERO SECTION
+=========================== */
+.landing-hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 3rem 4rem;
+    text-align: center;
+}
+
+.landing-hero__eyebrow {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
+.landing-hero__title {
+    font-family: "Cinzel", serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+}
+
+.landing-hero__title span {
+    color: var(--gold);
+}
+
+.landing-hero__subtitle {
+    font-family: "Lora", serif;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 580px;
+    margin: 0 auto 1rem auto;
+}
+
+.landing-hero__divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin: 1.5rem auto;
+}
+
+/* ===========================
+   CTA BUTTONS
+=========================== */
+.landing-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.btn {
+    font-family: "Lora", serif;
+    font-size: 0.88rem;
+    padding: 0.7rem 1.6rem;
+    border-radius: var(--radius-btn);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.04em;
+}
+
+.btn--primary {
+    background: var(--gold);
+    color: var(--white);
+    border: 2px solid var(--gold);
+}
+
+.btn--primary:hover {
+    background: var(--gold-hover);
+    border-color: var(--gold-hover);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: var(--green-dark);
+    border: 2px solid var(--green-dark);
+}
+
+.btn--secondary:hover {
+    background: var(--green-light);
+}
+
+/* ===========================
+   FEATURED PLANTS SECTION
+=========================== */
+.landing-plants {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem 5rem;
+}
+
+.landing-plants__eyebrow {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+    text-align: center;
+}
+
+.landing-plants__title {
+    font-family: "Cinzel", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+}
+
+.landing-plants__divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin: 0 auto 2.5rem auto;
+}
+
+/* ===========================
+   PLANT CARDS GRID (Landing)
+=========================== */
+.landing-plants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ===========================
+   LANDING PLANT CARD
+=========================== */
+.landing-plant-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+.landing-plant-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+}
+
+.landing-plant-card__img-wrap {
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #c8dfd0, #a8c8b4);
+}
+
+.landing-plant-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.landing-plant-card:hover .landing-plant-card__img-wrap img {
+    transform: scale(1.05);
+}
+
+.landing-plant-card__body {
+    padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.landing-plant-card__name {
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0 0 0.4rem 0;
+}
+
+.landing-plant-card__desc {
+    font-family: "Lora", serif;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+    .landing-hero {
+        padding: 3rem 1.5rem 2.5rem;
+    }
+
+    .landing-hero__title {
+        font-size: 2.2rem;
+    }
+
+    .landing-plants {
+        padding: 0 1.5rem 3rem;
+    }
+
+    .landing-plants-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .landing-plants-grid {
+        grid-template-columns: 1fr;
+    }
+}

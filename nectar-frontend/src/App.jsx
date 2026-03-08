@@ -10,7 +10,7 @@ import { AboutPage } from "./pages/AboutPage"
 import { AdminDashboard } from "./pages/AdminDashboard"
 import { UserProfile } from "./pages/UserProfile"
 import { LandingPage } from "./pages/LandingPage"
-import { PlantOfTheDay } from "./pages/PlantOfTheDay"
+
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route path="/aboutus/" element={<AboutPage />} />
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
+         <Route path = "/landing-page/" element = {<LandingPage/>}/>
 
         <Route path="/" element={
           <ProtectedRoute>
@@ -51,7 +52,7 @@ function App() {
             <UserProfile />
           </ProtectedRoute>}
         />
-      <Route path = "/landing-page/" element = {<LandingPage/>}/>
+
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
+
+:root {
+    --green-dark: #2d5a3d;
+    --green-mid: #3d7a52;
+    --green-light: #e8f2eb;
+    --green-pale: #f2f8f4;
+    --gold: #b8943f;
+    --gold-hover: #9e7d32;
+    --text-dark: #1e3328;
+    --text-body: #3a4a3e;
+    --text-muted: #6b7c70;
+    --white: #ffffff;
+    --shadow-soft: 0 4px 20px rgba(45, 90, 61, 0.10);
+    --shadow-card: 0 6px 28px rgba(45, 90, 61, 0.13);
+    --radius-card: 16px;
+    --radius-btn: 8px;
+}
+
+/* ===========================
+   PAGE
+=========================== */
+.profile-page {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f2f8f4 0%, #e8f2eb 60%, #ddeee3 100%);
+    font-family: "Lora", serif;
+    color: var(--text-body);
+}
+
+/* ===========================
+   2-COLUMN LAYOUT
+   3fr profile + bookmarks | 1fr PlantOfTheDay
+=========================== */
+.profile-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    align-items: start;
+}
+
+/* ===========================
+   LEFT — PROFILE MAIN
+=========================== */
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ===========================
+   PROFILE HEADER CARD
+=========================== */
+.profile-header {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 2rem 1.6rem;
+}
+
+.profile-header__eyebrow {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+}
+
+.profile-username {
+    font-family: "Cinzel", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0 0 0.3rem 0;
+}
+
+.profile-role {
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 0.22rem 0.8rem;
+    border-radius: 999px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    margin: 0 0 1rem 0;
+}
+
+.profile-gold-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+}
+
+/* ===========================
+   BOOKMARK COUNT
+=========================== */
+.profile-bookmark-count {
+    font-family: "Lora", serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 1rem 0 0 0;
+}
+
+.profile-bookmark-count strong {
+    color: var(--gold);
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+}
+
+/* ===========================
+   BOOKMARKS SECTION
+=========================== */
+.profile-bookmarks-section {
+    /* wrapper for list heading + list */
+}
+
+.profile-bookmarks-heading {
+    font-family: "Cinzel", serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 1rem 0;
+}
+
+.profile-bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* ===========================
+   BOOKMARK ITEM
+=========================== */
+.profile-bookmark-item {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 0.9rem 1.3rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.profile-bookmark-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+}
+
+.profile-bookmark-item a {
+    font-family: "Cinzel", serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.profile-bookmark-item a:hover {
+    color: var(--gold);
+}
+
+.profile-empty {
+    font-family: "Lora", serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+/* ===========================
+   RIGHT SIDEBAR — PlantOfTheDay
+=========================== */
+.potd-sidebar {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 1.4rem;
+    position: sticky;
+    top: 84px;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+    .profile-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .potd-sidebar {
+        position: static;
+    }
+}

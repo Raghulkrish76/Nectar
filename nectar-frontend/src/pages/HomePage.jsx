@@ -2,35 +2,34 @@ import { useState, useEffect } from "react"
 import api from "../api"
 import { Navbar } from "../components/Navbar"
 import "../styles/HomePage.css"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
-import { Bookmarks } from "./Bookmarks"
 import { PlantOfTheDay } from "./PlantOfTheDay"
 import { PlantCard } from "./PlantCard"
 
 export function HomePage() {
+    const { isAdmin, username } = useAuth()
+    const navigate = useNavigate()
     const [plants, setPlants] = useState([])
     const [benefits, setBenifits] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const { isAdmin, username } = useAuth()
-    const navigate = useNavigate()
     const [search, setSearch] = useState("")
     const [region, setRegion] = useState("")
     const [plantType, setPlantType] = useState("")
     const [appliedFilters, setAppliedFilters] = useState({})
     const [selectedBenefits, setSelectedBenefits] = useState([])
-    const [plantofTheDay,setPlantofTheDay] = useState([])
+
+    useEffect(() => { document.title = "Explore Plants - Nectar"; }, [])
+
     useEffect(() => {
         Promise.all([
             api.get("/api/plants/", { params: appliedFilters }),
             api.get("/api/healthbenefits/"),
-            api.get("/api/plantoftheday")
         ])
-            .then(([plantres, benefitsres,plantofthedayRes]) => {
+            .then(([plantres, benefitsres]) => {
                 const benifits = benefitsres.data
                 setBenifits(benifits)
-                setPlantofTheDay(plantofthedayRes.data)
                 const mappedplants = plantres.data.map((plant) => ({
                     ...plant,
                     health_benifits: plant.health_benifits
@@ -38,7 +37,6 @@ export function HomePage() {
                 }))
                 setPlants(mappedplants)
                 setLoading(false)
-
             })
             .catch((error) => {
                 setError("Failed to load plants")
@@ -46,142 +44,167 @@ export function HomePage() {
                 console.log(error)
             })
     }, [appliedFilters])
+
     return (
         <div className="home-page">
             <Navbar />
 
-
             <div className="home-layout">
 
-
-                <aside className="panel filters-panel">
-                    <h2 className="panel__title">Filters</h2>
-                    <h3><Link to = "/user-profile/">
-                       Hello {username} !
-                     </Link>
-                    </h3>
-                    <Link to="/bookmarks">
-                        <button>Bookmarks</button>
-                    </Link>
-                    <div className="filter-group">
-                        <span className="filter-group__label">Region</span>
-                        <div className="region-chips">
-                            {["All", "Tropical", "Sub-Tropical", "Temperate", "Arid/Desert", "Alphine/Himalayan"].map((r) => (
-                                <button key={r} className="chip">
-                                    {r}
-                                </button>
-                            ))}
-                        </div>
+                {/* Left Sidebar — Filters */}
+                <aside className="sidebar sidebar--filters">
+                    <div className="sidebar__user-block">
+                        <span className="sidebar__greeting">Welcome back,</span>
+                        <Link to="/user-profile/" className="sidebar__username">
+                            {username}
+                        </Link>
+                        <Link to="/bookmarks" className="sidebar__bookmarks-link">
+                            <span className="sidebar__bookmarks-icon">🔖</span>
+                            My Bookmarks
+                        </Link>
                     </div>
 
-                    <div className="filter-group">
-                        <span className="filter-group__label">Health Benefits</span>
-                        <div className="benefit-list">
-                            {benefits.map((b) => (
-                                <label key={b.id} className="benefit-item">
-                                    <input type="checkbox"
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                setSelectedBenefits([...selectedBenefits, b.name])
-                                            } else {
-                                                setSelectedBenefits(selectedBenefits.filter((n) => n !== b.name))
-                                            }
-                                        }}
-                                    />
-                                    {b.name}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-                    <button onClick={() => {
-                        const params = {}
-                        if (selectedBenefits.length > 0) params.health_benifits = selectedBenefits.join(",")
-                    
-                        setAppliedFilters(params)
+                    <div className="sidebar__divider" />
 
-                    }}>
-                        Apply  Health Benefits
-                    </button>
-                    <button className="filter-clear-btn" disabled >
-                        Clear All Filters
-                    </button>
+                    <div className="sidebar__section">
+                        <h2 className="sidebar__heading">Filters</h2>
+
+                        <div className="filter-group">
+                            <span className="filter-group__label">Health Benefits</span>
+                            <div className="benefit-checklist">
+                                {benefits.map((b) => (
+                                    <label key={b.id} className="benefit-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            className="benefit-checkbox__input"
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setSelectedBenefits([...selectedBenefits, b.name])
+                                                } else {
+                                                    setSelectedBenefits(selectedBenefits.filter((n) => n !== b.name))
+                                                }
+                                            }}
+                                        />
+                                        <span className="benefit-checkbox__label">{b.name}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        <button
+                            className="btn btn--primary btn--full"
+                            onClick={() => {
+                                const params = {}
+                                if (selectedBenefits.length > 0) params.health_benifits = selectedBenefits.join(",")
+                                setAppliedFilters(params)
+                            }}
+                        >
+                            Apply Benefits
+                        </button>
+                    </div>
                 </aside>
 
+                {/* Main Content — Plant Listing */}
+                <main className="plants-main">
+                    <div className="search-bar">
+                        <div className="search-bar__top-row">
+                            <div className="search-bar__input-wrapper">
+                                <span className="search-bar__icon">🔍</span>
+                                <input
+                                    type="text"
+                                    className="search-bar__input"
+                                    placeholder="Search plants by name…"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </div>
+                            <button
+                                className="btn btn--primary"
+                                onClick={() => {
+                                    const params = {}
+                                    if (search) params.search = search
+                                    if (region) params.region = region
+                                    if (plantType) params.plant_type = plantType
+                                    setAppliedFilters(params)
+                                }}
+                            >
+                                Search
+                            </button>
+                        </div>
 
+                        <div className="search-bar__filters-row">
+                            <select
+                                className="search-bar__select"
+                                value={region}
+                                onChange={(e) => setRegion(e.target.value)}
+                            >
+                                <option value="">All Regions</option>
+                                <option value="tropical">Tropical</option>
+                                <option value="subtropical">Sub-tropical</option>
+                                <option value="temperate">Temperate</option>
+                                <option value="arid">Arid / Desert</option>
+                                <option value="alpine">Alpine</option>
+                            </select>
 
-
-                <main className="plants-panel">
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Search Plants"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        <select value={region} onChange={(e) => setRegion(e.target.value)}>
-                            <option value=""> All Region</option>
-                            <option value="tropical"> Tropical </option>
-                            <option value="subtropical">Sub-tropical</option>
-                            <option value="temperate"> Temperate </option>
-                            <option value="arid">Arid/Desert</option>
-                            <option value="alpine">Alphine</option>
-
-
-                        </select>
-
-                        <select
-                            value={plantType}
-                            onChange={(e) => setPlantType(e.target.value)}
-                        >
-                            <option value="">All Types</option>
-                            <option value="herb">Herb</option>
-                            <option value="shrub">Shrub</option>
-                            <option value="tree">Tree</option>
-                            <option value="climber">Climber</option>
-                            <option value="aquatic">Aquatic</option>
-                            <option value="succulent">Succulent</option>
-                        </select>
-                        <button onClick={() => {
-                            const params = {}
-                            if (search) params.search = search
-                            if (region) params.region = region
-                            if (plantType) params.plant_type = plantType
-                            setAppliedFilters(params)
-
-                        }}>
-                            Apply  Filters
-                        </button>
-
+                            <select
+                                className="search-bar__select"
+                                value={plantType}
+                                onChange={(e) => setPlantType(e.target.value)}
+                            >
+                                <option value="">All Types</option>
+                                <option value="herb">Herb</option>
+                                <option value="shrub">Shrub</option>
+                                <option value="tree">Tree</option>
+                                <option value="climber">Climber</option>
+                                <option value="aquatic">Aquatic</option>
+                                <option value="succulent">Succulent</option>
+                            </select>
+                        </div>
                     </div>
-                    <br />
-                    <h2 className="panel__title">Medicinal Plants</h2>
 
-                    {loading && <p className="result-count">Loading plants…</p>}
+                    <div className="plants-main__header">
+                        <div>
+                            <span className="section-eyebrow">Encyclopedia</span>
+                            <h2 className="section-heading">Medicinal Plants</h2>
+                            <div className="gold-divider" />
+                        </div>
+
+                        {isAdmin && (
+                            <button
+                                className="btn btn--secondary"
+                                onClick={() => navigate("/plants/create/")}
+                            >
+                                + Add Plant
+                            </button>
+                        )}
+                    </div>
+
+                    {loading && (
+                        <p className="status-message status-message--loading">
+                            Loading plants…
+                        </p>
+                    )}
 
                     {error && (
-                        <p className="result-count" style={{ color: "#e8a0a0" }}>{error}</p>
+                        <p className="status-message status-message--error">{error}</p>
                     )}
 
-                    {isAdmin && (
-                        <button onClick={() => navigate("/plants/create/")}>
-                            Create Plant
-                        </button>
-                    )}
                     {!loading && !error && (
                         <>
                             <p className="result-count">
-                                Showing {plants.length} plants
+                                Showing <strong>{plants.length}</strong> plants
                             </p>
-                            <PlantCard plants = {plants}/>
-                            
+                            <PlantCard plants={plants} />
                         </>
                     )}
                 </main>
-                <aside className="panel potd-panel">
-                    <PlantOfTheDay/>
+
+                {/* Right Sidebar — Plant of the Day */}
+                <aside className="sidebar sidebar--potd">
+                    <PlantOfTheDay />
                 </aside>
 
             </div>
-        </div >
+        </div>
     )
 }

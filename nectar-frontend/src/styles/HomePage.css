@@ -1,344 +1,590 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap");
 
+/* ===========================
+   CSS VARIABLES
+=========================== */
+:root {
+  --green-dark: #2d5a3d;
+  --green-mid: #3d7a52;
+  --green-light: #e8f2eb;
+  --green-pale: #f2f8f4;
+  --gold: #b8943f;
+  --gold-hover: #9e7d32;
+  --text-dark: #1e3328;
+  --text-body: #3a4a3e;
+  --text-muted: #6b7c70;
+  --white: #ffffff;
+  --shadow-soft: 0 4px 20px rgba(45, 90, 61, 0.10);
+  --shadow-card: 0 6px 28px rgba(45, 90, 61, 0.13);
+  --radius-card: 16px;
+  --radius-btn: 8px;
+}
+
+/* ===========================
+   PAGE WRAPPER
+=========================== */
 .home-page {
-    min-height: 100vh;
-    background-color: #0f2318;
-    color: #f5f0e8;
-    font-family: "Lora", serif;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #f2f8f4 0%, #e8f2eb 60%, #ddeee3 100%);
+  font-family: "Lora", serif;
+  color: var(--text-body);
 }
 
+/* ===========================
+   MAIN 3-COLUMN LAYOUT
+   Left sidebar | Main content | Right (PlantOfTheDay)
+=========================== */
 .home-layout {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem 2rem;
-    max-width: 1600px;
-    margin: 0 auto;
-    align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 1.5rem;
+  padding: 2rem 3rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: start;
 }
 
-.panel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(201, 168, 76, 0.18);
-    border-radius: 14px;
-    padding: 1.4rem;
-    backdrop-filter: blur(6px);
+/* ===========================
+   SIDEBAR (Left — Filters)
+=========================== */
+.sidebar {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+  position: sticky;
+  top: 84px;
 }
 
-.panel__title {
-    font-family: "Cinzel", serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #c9a84c;
-    margin: 0 0 1.2rem 0;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+.sidebar__user-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
 }
 
-.filters-panel {
-    position: sticky;
-    top: 84px;
+.sidebar__greeting {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: "Lora", serif;
 }
 
+.sidebar__username {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--green-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sidebar__username:hover {
+  color: var(--gold);
+}
+
+.sidebar__bookmarks-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-top: 0.2rem;
+  transition: color 0.2s;
+}
+
+.sidebar__bookmarks-link:hover {
+  color: var(--green-dark);
+}
+
+.sidebar__bookmarks-icon {
+  font-size: 0.9rem;
+}
+
+.sidebar__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--green-light);
+  margin: 0.8rem 0 1.2rem;
+}
+
+
+
+.sidebar__heading {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem 0;
+}
+
+/* ===========================
+   FILTER GROUP
+=========================== */
 .filter-group {
-    margin-bottom: 1.4rem;
+  margin-bottom: 1.2rem;
 }
 
 .filter-group__label {
-    font-family: "Cinzel", serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #a8c5a8;
-    margin-bottom: 0.6rem;
-    display: block;
+  font-family: "Cinzel", serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
-.region-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
+/* ===========================
+   BENEFIT CHECKLIST
+=========================== */
+.benefit-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.chip {
-    font-family: "Lora", serif;
-    font-size: 0.78rem;
-    padding: 0.3rem 0.75rem;
-    border-radius: 999px;
-    border: 1.5px solid rgba(201, 168, 76, 0.35);
-    background: transparent;
-    color: #d4e8d4;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+.benefit-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
-.chip:hover,
-.chip.chip--active {
-    background: rgba(201, 168, 76, 0.18);
-    border-color: #c9a84c;
-    color: #f5f0e8;
+.benefit-checkbox__input {
+  accent-color: var(--gold);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
 }
 
-.benefit-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.benefit-checkbox__label {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  font-family: "Lora", serif;
 }
 
-.benefit-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.82rem;
-    color: #c8ddc8;
-    cursor: pointer;
+/* ===========================
+   BUTTONS
+=========================== */
+.btn {
+  font-family: "Lora", serif;
+  font-size: 0.88rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.benefit-item input[type="checkbox"] {
-    accent-color: #c9a84c;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
+.btn--primary {
+  background: var(--gold);
+  color: var(--white);
+  border: 2px solid var(--gold);
 }
 
-.filter-clear-btn {
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1.5px solid rgba(232, 160, 160, 0.4);
-    background: transparent;
-    color: #e8a0a0;
-    font-family: "Cinzel", serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: background 0.2s;
+.btn--primary:hover {
+  background: var(--gold-hover);
+  border-color: var(--gold-hover);
 }
 
-.filter-clear-btn:hover {
-    background: rgba(232, 160, 160, 0.1);
+.btn--secondary {
+  background: transparent;
+  color: var(--green-dark);
+  border: 2px solid var(--green-dark);
 }
 
-.plants-panel {
-    border: none;
-    background: transparent;
-    padding: 0;
+.btn--secondary:hover {
+  background: var(--green-light);
 }
 
-.plants-panel .panel__title {
-    border-bottom: none;
-    margin-bottom: 1rem;
+.btn--full {
+  width: 100%;
+  text-align: center;
 }
 
+/* ===========================
+   SEARCH BAR — always visible
+   Row 1: input + search button
+   Row 2: region + type selects
+=========================== */
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Top row: search input + button */
+.search-bar__top-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.search-bar__input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  background: var(--green-pale);
+  border: 1.5px solid var(--green-light);
+  border-radius: var(--radius-btn);
+  padding: 0.45rem 0.8rem;
+}
+
+.search-bar__icon {
+  font-size: 1rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-bar__input {
+  /* override index.css global select/input widths */
+  width: 100% !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  font-family: "Lora", serif;
+  font-size: 0.9rem;
+  color: var(--text-body);
+}
+
+.search-bar__input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Bottom row: region + type selects side by side */
+.search-bar__filters-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.search-bar__select {
+  /* override index.css global select{width:100%} */
+  flex: 1;
+  width: auto !important;
+  font-family: "Lora", serif;
+  font-size: 0.85rem;
+  color: var(--text-body);
+  border: 1.5px solid var(--green-light) !important;
+  border-radius: var(--radius-btn) !important;
+  padding: 0.45rem 0.75rem !important;
+  background: var(--green-pale) !important;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.search-bar__select:focus {
+  border-color: var(--green-mid) !important;
+}
+
+/* ===========================
+   MAIN AREA — PLANTS
+=========================== */
+
+
+.plants-main__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* ===========================
+   SECTION TYPOGRAPHY
+=========================== */
+.section-eyebrow {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.section-heading {
+  font-family: "Cinzel", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin: 0 0 0.5rem 0;
+}
+
+.gold-divider {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ===========================
+   PLANT CARDS GRID
+=========================== */
 .plants-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
 }
 
 .plant-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(201, 168, 76, 0.15);
-    border-radius: 14px;
-    overflow: hidden;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s;
-    cursor: pointer;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .plant-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-    border-color: rgba(201, 168, 76, 0.45);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
 }
 
 .plant-card__img-wrap {
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-    background: #1a3a2a;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #c8dfd0, #a8c8b4);
 }
 
 .plant-card__img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.35s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .plant-card:hover .plant-card__img-wrap img {
-    transform: scale(1.07);
+  transform: scale(1.05);
 }
 
 .plant-card__body {
-    padding: 0.9rem 1rem 1rem;
+  padding: 1rem 1.1rem 1.1rem;
 }
 
 .plant-card__name {
-    font-family: "Cinzel", serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #f5f0e8;
-    margin: 0 0 0.3rem 0;
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 0.3rem 0;
 }
 
 .plant-card__region {
-    font-size: 0.72rem;
-    color: #c9a84c;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-family: "Cinzel", serif;
 }
 
 .plant-card__desc {
-    font-size: 0.8rem;
-    color: #a8c5a8;
-    line-height: 1.55;
-    margin: 0 0 0.75rem 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0 0 0.75rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .plant-card__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .plant-card__tag {
-    font-size: 0.68rem;
-    padding: 0.18rem 0.55rem;
-    border-radius: 999px;
-    background: rgba(201, 168, 76, 0.12);
-    color: #c9a84c;
-    border: 1px solid rgba(201, 168, 76, 0.25);
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-family: "Lora", serif;
 }
 
-.potd-panel {
-    position: sticky;
-    top: 84px;
+/* ===========================
+   PLANT OF THE DAY SIDEBAR
+=========================== */
+.sidebar--potd {
+  position: sticky;
+  top: 84px;
+}
+
+.panel__title {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--green-light);
 }
 
 .potd-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.7rem;
-    font-family: "Cinzel", serif;
-    letter-spacing: 0.1em;
-    color: #c9a84c;
-    background: rgba(201, 168, 76, 0.12);
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    border-radius: 999px;
-    padding: 0.25rem 0.7rem;
-    margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  background: #fdf6e3;
+  border: 1px solid rgba(184, 148, 63, 0.3);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  margin-bottom: 0.9rem;
 }
 
 .potd-img-wrap {
-    width: 100%;
-    height: 180px;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 1rem;
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+  background: linear-gradient(135deg, #c8dfd0, #a8c8b4);
 }
 
 .potd-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .potd-name {
-    font-family: "Cinzel", serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #f5f0e8;
-    margin: 0 0 0.25rem 0;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.25rem 0;
 }
 
 .potd-region {
-    font-size: 0.72rem;
-    color: #c9a84c;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.7rem;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+  font-family: "Cinzel", serif;
 }
 
 .potd-desc {
-    font-size: 0.82rem;
-    color: #a8c5a8;
-    line-height: 1.6;
-    margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .potd-benefits {
-    margin-bottom: 1.1rem;
-}
-
-.potd-benefits__title {
-    font-family: "Cinzel", serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #d4e8d4;
-    margin-bottom: 0.5rem;
-}
-
-.potd-benefits__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-}
-
-.potd-benefits__list li {
-    font-size: 0.78rem;
-    color: #c8ddc8;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4rem;
-}
-
-.potd-benefits__list li::before {
-    content: "✦";
-    color: #c9a84c;
-    font-size: 0.6rem;
-    margin-top: 2px;
-    flex-shrink: 0;
+  margin-bottom: 1rem;
 }
 
 .potd-btn {
-    display: block;
-    width: 100%;
-    padding: 0.6rem;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, #2a6040, #1a4a30);
-    color: #f5f0e8;
-    font-family: "Cinzel", serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.15s;
-    text-align: center;
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: var(--radius-btn);
+  border: 2px solid var(--green-dark);
+  background: transparent;
+  color: var(--green-dark);
+  font-family: "Cinzel", serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-align: center;
+  text-decoration: none;
 }
 
 .potd-btn:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
+  background: var(--green-dark);
+  color: var(--white);
+}
+
+/* ===========================
+   STATUS MESSAGES
+=========================== */
+.status-message {
+  font-family: "Lora", serif;
+  font-size: 0.88rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-btn);
+  margin-bottom: 1rem;
+}
+
+.status-message--loading {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.status-message--error {
+  color: #c0392b;
+  background: #fef0ee;
 }
 
 .result-count {
-    font-size: 0.78rem;
-    color: #7a9e7a;
-    margin-bottom: 1rem;
-    font-style: italic;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-style: italic;
+  font-family: "Lora", serif;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 1024px) {
+  .home-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .sidebar--potd {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .sidebar--filters {
+    position: static;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
